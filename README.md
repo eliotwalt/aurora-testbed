@@ -29,9 +29,9 @@ Note: `N=5` in `train.py`
 ## Training results (1 GPU, no DDP)
 Script `train_1gpu_no_ddp.py`. Logs can be found in `logs/train/1gpu`
 
-- `bf16-mode` triggers the illegal memory access error. 
-- `autocast`
-- None of them 
+- `bf16-mode` triggers the illegal memory access error. (13102218.log)
+- `autocast` triggers the illegal memory access error. (13102219.log)
+- FP32 triggers the illegal memory access error on rank 0 on first batch while rank 1 performs 5 iterations. (13102220.log)
 
 ## Training results (2 GPUs)
 

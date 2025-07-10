@@ -46,15 +46,3 @@ case $option in
         exit 1
         ;;
 esac
-
-# srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
-#     train.py --num_epochs=500 --bf16 \
-#         --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
-
-srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
-    train.py --num_epochs=500 --autocast \
-        --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
-
-# srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
-#     train.py --num_epochs=500 \
-#         --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
