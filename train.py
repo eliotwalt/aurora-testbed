@@ -83,7 +83,7 @@ def train(args):
     
     # loss and optimizer
     criterion = nn.L1Loss().to(device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5, lr=5e-6)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5, weight_decay=5e-6)
     print("Loss and optimizer configured.")
     
     # autocast context
