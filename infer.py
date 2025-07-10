@@ -61,7 +61,7 @@ def infer(args):
     if local_rank == 0: print("Starting Aurora inference script with arguments:", args)
     
     # Dummy dataset
-    N = 5  # Number of samples
+    N = 100  # Number of samples
     M = 69 # 4 + 5 * 13
     H, W = 720, 1440
     lat=torch.linspace(90, -90, H)

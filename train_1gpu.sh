@@ -1,11 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=aurora-train
 #SBATCH --partition=gpu_h100
-#SBATCH --time=10:00
+#SBATCH --time=1:00:00
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
+#SBATCH --output=logs/train/%j_${1}.log
+#SBATCH --error=logs/train/%j_${1}.log
 
 export CUDA_LAUNCH_BLOCKING=1
 
@@ -22,56 +24,56 @@ case "$option" in
         # small no bf16, no autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 --small \
+            --num_epochs=500 --small \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
         ;;
     1)
         # small bf16, no autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 --small --bf16 \
+            --num_epochs=500 --small --bf16 \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
         ;;
     2)
         # small no bf16, autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 --small --autocast \
+            --num_epochs=500 --small --autocast \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
         ;;
     3)
         # small no bf16, autocast, Basic3D checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 --small --autocast \
+            --num_epochs=500 --small --autocast \
             --checkpointing_module_names Basic3DEncoderLayer Basic3DDecoderLayer
         ;;
     4)
         # large no bf16, no autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 \
+            --num_epochs=500 \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
         ;;
     5)
         # large bf16, no autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 --bf16 \
+            --num_epochs=500 --bf16 \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
         ;;
     6)
         # large no bf16, autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 --autocast \
+            --num_epochs=500 --autocast \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
         ;;
     7)
         # large no bf16, autocast, Basic3D checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
-            --num_epochs=10 --autocast \
+            --num_epochs=500 --autocast \
             --checkpointing_module_names Basic3DEncoderLayer Basic3DDecoderLayer
         ;;
     *)

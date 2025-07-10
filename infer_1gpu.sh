@@ -1,11 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=aurora-infer
 #SBATCH --partition=gpu_h100
-#SBATCH --time=10:00
+#SBATCH --time=1:00:00
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
+#SBATCH --output=logs/infer/%j_${1}.log
+#SBATCH --error=logs/infer/%j_${1}.log
 
 export CUDA_LAUNCH_BLOCKING=1
 
