@@ -7,11 +7,24 @@
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
 
+export CUDA_LAUNCH_BLOCKING=1
+
 source env/venv_h100/bin/activate
+echo "Environment Info:"
+echo " * Torchrun path: $(which torchrun)"
+echo " * Python path: $(which python)"
+echo " * Python version: $(python --version)"
+echo " * pytorch version: $(python -c 'import torch; print(torch.__version__)')"
 
 option=$1
-
 case "$option" in
+    0) 
+        # small no bf16, no autocast, all checkpointing
+        srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
+            infer.py \
+            --num_steps=196 --small \
+            --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
+        ;;
     1)
         # small bf16, no autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
@@ -55,7 +68,7 @@ case "$option" in
             --checkpointing_module_names Basic3DEncoderLayer Basic3DDecoderLayer 
         ;;
     *)
-        echo "Usage: $0 {1|2|3|4|5|6}"
+        echo "Usage: $0 {0|1|2|3|4|5|6}"
         exit 1
         ;;
 esac

@@ -16,7 +16,8 @@ echo " * Python path: $(which python)"
 echo " * Python version: $(python --version)"
 echo " * pytorch version: $(python -c 'import torch; print(torch.__version__)')"
 
-case "$1" in
+option=$1
+case "$option" in
     0) 
         # small no bf16, no autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
