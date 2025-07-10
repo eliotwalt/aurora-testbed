@@ -71,7 +71,7 @@ def infer(args):
     dataset = TensorDataset(random_input)
     sampler = DistributedSampler(dataset, shuffle=True)
     dataloader = DataLoader(dataset, sampler=sampler, batch_size=1, num_workers=1)
-    print("Dummy dataset created with random data.")
+    if rank == 0: print("Dummy dataset created with random data.")
     
     # model
     if args.small: model = AuroraSmallPretrained(bf16_mode=args.bf16, use_lora=False)
@@ -84,7 +84,7 @@ def infer(args):
     for param in model.parameters():
         param.requires_grad = False    
     model.eval()
-    print("Model loaded and frozen.")
+    if rank == 0: print("Model loaded and frozen.")
     
     # autocast context
     if args.autocast: autocast_context = torch.autocast(device_type='cuda', dtype=torch.bfloat16)

@@ -30,6 +30,13 @@ Note: `N=5` in `train.py`
 Script `train_1gpu_no_ddp.py`. Logs can be found in `logs/train/1gpu`
 
 - `bf16-mode` triggers the illegal memory access error. 
+- `autocast`
+- None of them 
+
+## Training results (2 GPUs)
+
+- `bf16-mode` triggers the illegal memory access error. 
+
 
 
 ## Inference results (1 GPU)

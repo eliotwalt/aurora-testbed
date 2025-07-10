@@ -72,7 +72,7 @@ def train(args):
     dataset = TensorDataset(random_input, random_target)
     sampler = DistributedSampler(dataset, shuffle=True)
     dataloader = DataLoader(dataset, sampler=sampler, batch_size=1, num_workers=1)
-    print("Dummy dataset created with random data.")
+    if rank == 0: print("Dummy dataset created with random data.")
     
     # model
     if args.small: model = AuroraSmallPretrained(bf16_mode=args.bf16, use_lora=False)
@@ -83,12 +83,12 @@ def train(args):
     model = model.train()
     if not args.no_ddp:
         model = DDP(model, device_ids=[local_rank])
-    print("Model loaded and wrapped in DDP.")
+    if rank == 0: print("Model loaded and wrapped in DDP.")
     
     # loss and optimizer
     criterion = nn.L1Loss().to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5, weight_decay=5e-6)
-    print("Loss and optimizer configured.")
+    if rank == 0: print("Loss and optimizer configured.")
     
     # autocast context
     if args.autocast: autocast_context = torch.autocast(device_type='cuda', dtype=torch.bfloat16)

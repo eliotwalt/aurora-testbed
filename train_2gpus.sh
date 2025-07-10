@@ -18,6 +18,31 @@ echo " * Python path: $(which python)"
 echo " * Python version: $(python --version)"
 echo " * pytorch version: $(python -c 'import torch; print(torch.__version__)')"
 
-srun torchrun --standalone --nnodes=1 --nproc_per_node=2 \
-    train.py --num_epochs=500 --bf16 \
-        --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
+option=$1
+case $option in
+    0)
+        # bf16 mode
+        echo "$SLURM_JOB_ID: Running in bf16 mode"
+        srun torchrun --standalone --nnodes=1 --nproc_per_node=2 \
+            train.py --num_epochs=500 --bf16 \
+                --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
+        ;;
+    1)
+        # autocast mode
+        echo "$SLURM_JOB_ID: Running in autocast mode"
+        srun torchrun --standalone --nnodes=1 --nproc_per_node=2 \
+            train.py --num_epochs=500 --autocast \
+                --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
+        ;;
+    2)
+        # none
+        echo "$SLURM_JOB_ID: Running in FP32 mode"
+        srun torchrun --standalone --nnodes=1 --nproc_per_node=2 \
+            train.py --num_epochs=500 \
+                --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
+        ;;
+    *)
+        echo "Invalid option: ${option}"
+        exit 1
+        ;;
+esac
