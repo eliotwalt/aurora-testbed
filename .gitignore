@@ -10,13 +10,6 @@ venv/
 venv_*/
 slurm-*.out
 
-*.nc
-*.zarr
-*.pkl
-*.png
-*.gif
-*.pt
-
 draft/
 *.draft.*
 draft.*
