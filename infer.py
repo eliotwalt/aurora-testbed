@@ -85,7 +85,6 @@ def infer(args):
     model = model.eval()
     for param in model.parameters():
         param.requires_grad = False    
-    model = DDP(model, device_ids=[local_rank])
     model.eval()
     print("Model loaded, frozen and wrapped in DDP.")
     

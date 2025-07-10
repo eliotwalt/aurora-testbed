@@ -1,5 +1,5 @@
 import os
-import gc
+from tqdm import tqdm
 import datetime
 import contextlib
 import argparse
@@ -90,8 +90,10 @@ def train(args):
     else: autocast_context = contextlib.nullcontext()
     
     # training loop
+    global_step = 0
     for epoch in range(args.num_epochs):
-        for i, (inputs, targets) in enumerate(dataloader):
+        pbar = tqdm(dataloader, desc=f"Epoch {epoch+1}/{args.num_epochs}", disable=(local_rank != 0))
+        for _, (inputs, targets) in enumerate(dataloader):
             # to batch and move to device
             inputs, targets = map(lambda x: make_batch(x, lat, lon)._fmap(lambda x: x.to(device, non_blocking=True)), (inputs, targets))
             optimizer.zero_grad()
@@ -102,7 +104,10 @@ def train(args):
             # bwd 
             loss.backward()
             optimizer.step()
-            if local_rank == 0: print(f"Epoch [{epoch+1}/{args.num_epochs}], Step [{i+1}/{len(dataloader)}], Loss: {loss.item():.4f}")
+            # print
+            pbar.update(1)
+            pbar.set_postfix(loss=loss.detach().item(), step=global_step)
+            global_step += 1
                 
 def main(args):
     try: train(args)
