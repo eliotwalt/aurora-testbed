@@ -23,7 +23,7 @@ echo "Running training with option: $option"
 case "$option" in
     0) 
         # small no bf16, no autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|true|false|false|all|"
+        echo "|$option|$SLURM_JOB_ID|196|true|false|false|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --small \
@@ -31,7 +31,7 @@ case "$option" in
         ;;
     1)
         # small bf16, no autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|true|true|false|all|"
+        echo "|$option|$SLURM_JOB_ID|196|true|true|false|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --small --bf16 \
@@ -39,7 +39,7 @@ case "$option" in
         ;;
     2)
         # small no bf16, autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|true|false|true|all|"
+        echo "|$option|$SLURM_JOB_ID|196|true|false|true|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --small --autocast \
@@ -47,7 +47,7 @@ case "$option" in
         ;;
     3)
         # small bf16, autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|true|true|true|all|"
+        echo "|$option|$SLURM_JOB_ID|196|true|true|true|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --small --bf16 --autocast \
@@ -55,7 +55,7 @@ case "$option" in
         ;;
     4)
         # small no bf16, autocast, Basic3DEncoderLayer Basic3DDecoderLayer checkpointing
-        echo "$option|$SLURM_JOB_ID|196|true|false|true|Basic3DEncoderLayer Basic3DDecoderLayer|"
+        echo "|$option|$SLURM_JOB_ID|196|true|false|true|Basic3DEncoderLayer Basic3DDecoderLayer|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --small --autocast \
@@ -63,7 +63,7 @@ case "$option" in
         ;;
     5)
         # large no bf16, no autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|false|false|false|all|"
+        echo "|$option|$SLURM_JOB_ID|196|false|false|false|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 \
@@ -71,7 +71,7 @@ case "$option" in
         ;;
     6)
         # large bf16, no autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|false|true|false|all|"
+        echo "|$option|$SLURM_JOB_ID|196|false|true|false|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --bf16 \
@@ -79,7 +79,7 @@ case "$option" in
         ;;
     7)
         # large no bf16, autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|false|false|true|all|"
+        echo "|$option|$SLURM_JOB_ID|196|false|false|true|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --autocast \
@@ -87,7 +87,7 @@ case "$option" in
         ;;
     8)
         # large bf16, autocast, all checkpointing
-        echo "$option|$SLURM_JOB_ID|196|false|true|true|all|"
+        echo "|$option|$SLURM_JOB_ID|196|false|true|true|all|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --bf16 --autocast \
@@ -95,7 +95,7 @@ case "$option" in
         ;;
     9)
         # large no bf16, autocast, Basic3DEncoderLayer Basic3DDecoder
-        echo "$option|$SLURM_JOB_ID|196|false|false|true|Basic3DEncoderLayer Basic3DDecoderLayer|"
+        echo "|$option|$SLURM_JOB_ID|196|false|false|true|Basic3DEncoderLayer Basic3DDecoderLayer|"
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             infer.py \
             --num_steps=196 --autocast \
