@@ -51,6 +51,7 @@ case "$option" in
             train.py \
             --num_epochs=500 --small --bf16 --autocast \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
+        ;;
     4)
         # small no bf16, autocast, Basic3DEncoderLayer Basic3DDecoderLayer checkpointing
         echo "$option|$SLURM_JOB_ID|500|true|false|true|Basic3DEncoderLayer Basic3DDecoderLayer|"
