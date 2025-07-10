@@ -55,7 +55,7 @@ def train(args):
     rank = int(os.environ["RANK"])
     local_rank = int(os.environ["LOCAL_RANK"])
     world_size = int(os.environ["WORLD_SIZE"])
-    if not args.no_ddp and world_size > 1:
+    if args.no_ddp and world_size > 1:
         raise ValueError("Distributed training is enabled but WORLD_SIZE > 1. Use --no_ddp to disable DDP.")
     dist.init_process_group(backend='nccl')
     device = local_rank # torch.device(f'cuda:{local_rank}')
