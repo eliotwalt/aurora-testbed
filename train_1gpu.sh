@@ -24,6 +24,7 @@ case "$option" in
             train.py \
             --num_epochs=10 --small \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
+        ;;
     1)
         # small bf16, no autocast, all checkpointing
         srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
