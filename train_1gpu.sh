@@ -7,7 +7,7 @@
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
 
-source env/venv_h100/bin/activate
+source ../Xaurora/env/venv_h100/bin/activate
 
 option=$1
 
