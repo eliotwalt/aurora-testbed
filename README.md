@@ -1,6 +1,15 @@
 # Aurora test bed
 Training and inference of Aurora model on NVIDIA H100 GPUs. 
 
+## Summary
+- We are able to run stable inference.
+- We are unable to train the large model with more than 1 GPU. We either get illegal memory access or cuda OOM errors, regardless of the configuration of mixed precision and activation checkpointing. 
+- Our main observations are:
+    - Inference should be run on independent processes (i.e. no torch distributed)
+    - The mixed precision options do not work.
+    - The small model consumes more memory than the large model.
+    - There seems to be some GPU memory leaks somewhere in the model implementation as the memory usage increases, inevitably resulting in an OOM.
+
 ## Training results (DDP 1 GPU)
 Script `train_1gpu.sh`. Logs can be found in `logs/train/1gpu`.
 
@@ -29,13 +38,24 @@ Note: `N=5` in `train.py`
 ## Training results (1 GPU, no DDP)
 Script `train_1gpu_no_ddp.py`. Logs can be found in `logs/train/1gpu`
 
-- `bf16-mode` triggers the illegal memory access error. (13102218.log)
-- `autocast` triggers the illegal memory access error. (13102219.log)
-- FP32 triggers the illegal memory access error on rank 0 on first batch while rank 1 performs 5 iterations. (13102220.log)
+- `bf16-mode` triggers the illegal memory access error. (13102934.log)
+- `autocast` triggers the illegal memory access error. (13102936.log)
+- FP32 runs but will probably fail at some point (13102938.log)
 
 ## Training results (2 GPUs)
 
-- `bf16-mode` triggers the illegal memory access error. 
+- `bf16-mode` triggers (13102221.log)
+    - rank 0: Cuda OOM in loss.backward of batch 1 
+    - rank 1: `RuntimeError: CUDA error: CUBLAS_STATUS_ALLOC_FAILED when calling 'cublasCreate(handle)'` (in forward of batch 1) and Cuda OOM (in forward of batch 1)
+- `autocast` triggers (13102223.log)
+    - rank 0: Cuda OOM in forward of batch 1 and illegal memory access error in loss.backward of batch 1
+    - rank 1: Cuda OOM in forward of batch 1 and illegal memory access error in loss.backward of batch 1
+- FP32
+    - rank 0: Cuda OOM twice in forward
+    - rank 1: Cuda OOM once in forward
+
+## Observations
+- Could the multiple errors in a snigle rank be due to gradient checkpointing? Because we recompute lots of things?
 
 
 
@@ -56,15 +76,9 @@ Note: `N=100` in `infer.py`.
 ## Inference results (2GPUs)
 Script `infer_2gpus.sh`. Logs can be found in `logs/infer/2gpus`.
 
-We get an Cuda OOM.
-```
-...
-Batch [4/50]: 100%|██████████| 196/196 [05:38<00:00,  1.73s/it]
-Batch [3/50]:  89%|████████▉ | 174/196 [07:59<01:03,  2.89s/it]
-[rank0]: Traceback (most recent call last):
-[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 3.21 GiB. GPU 0 has a total capacity of 93.11 GiB of which 3.15 GiB is free. Process 569641 has 73.59 GiB memory in use. Including non-PyTorch memory, this process has 16.36 GiB memory in use. Of the allocated memory 15.64 GiB is allocated by PyTorch, and 50.30 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-...
-```
+- `bf16` fails. It raises `ChildFailedError` which does not provide any context. (13102222.log)
+- `autocast` is slow: ~2it/s angainst ~1it/s in 1GPU mode (i.e. infer/1gpu/13098861.log) (13102224.log)
+- FP32 fails. It raises `ChildFailedError` which does not provide any context. (13102222.log)
 
 ### Observations
 - SLOWER than 1GPU and does not work!
