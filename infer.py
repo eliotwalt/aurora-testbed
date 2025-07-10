@@ -1,5 +1,4 @@
 import os
-import gc
 import datetime
 import contextlib
 import argparse
@@ -7,9 +6,7 @@ from tqdm import tqdm
 import dataclasses
 
 import torch
-import torch.nn as nn
 import torch.distributed as dist
-from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data.distributed import DistributedSampler
 from torch.utils.data import DataLoader, TensorDataset
 from torch.distributed.algorithms._checkpoint.checkpoint_wrapper import (
@@ -82,11 +79,11 @@ def infer(args):
     custom_activation_checkpointing(model, args.checkpointing_module_names)
     model = model.to(device)
     # full model freeze, might be unnecessary
-    model = model.eval()
+    model.eval()
     for param in model.parameters():
         param.requires_grad = False    
     model.eval()
-    print("Model loaded, frozen and wrapped in DDP.")
+    print("Model loaded and frozen.")
     
     # autocast context
     if args.autocast: autocast_context = torch.autocast(device_type='cuda', dtype=torch.bfloat16)

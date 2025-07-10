@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=aurora-ddp
+#SBATCH --job-name=aurora-infer
 #SBATCH --partition=gpu_h100
 #SBATCH --time=10:00
 #SBATCH --nodes=1 
