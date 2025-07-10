@@ -48,6 +48,8 @@ Note: `N=100` in `infer.py`.
 
 ## Inference results (2GPUs)
 Script `infer_2gpus.sh`. Logs can be found in `logs/infer/2gpus`.
+
+We get an Cuda OOM.
 ```
 ...
 Batch [4/50]: 100%|██████████| 196/196 [05:38<00:00,  1.73s/it]
