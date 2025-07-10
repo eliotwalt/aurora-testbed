@@ -1,0 +1,323 @@
+Environment Info:
+ * Torchrun path: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/torchrun
+ * Python path: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/python
+ * Python version: Python 3.11.7
+ * pytorch version: 2.5.1+cu124
+13102225: Running in FP32 mode
+Starting Aurora training script with arguments: Namespace(num_epochs=500, small=False, bf16=False, autocast=False, checkpointing_module_names=['Perceiver3DEncoder', 'Swin3DTransformerBackbone', 'Basic3DEncoderLayer', 'Basic3DDecoderLayer', 'Perceiver3DDecoder', 'LinearPatchReconstruction'], no_ddp=False)
+Starting Aurora training script with arguments: Namespace(num_epochs=500, small=False, bf16=False, autocast=False, checkpointing_module_names=['Perceiver3DEncoder', 'Swin3DTransformerBackbone', 'Basic3DEncoderLayer', 'Basic3DDecoderLayer', 'Perceiver3DDecoder', 'LinearPatchReconstruction'], no_ddp=False)
+Dummy dataset created with random data.
+Dummy dataset created with random data.
+Model loaded and wrapped in DDP.
+Loss and optimizer configured.
+Model loaded and wrapped in DDP.
+Loss and optimizer configured.
+Epoch 1/500:   0%|          | 0/3 [00:00<?, ?it/s][rank1]: Traceback (most recent call last):
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 131, in <module>
+[rank1]:     main(args)
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 119, in main
+[rank1]:     except Exception as e: dist.destroy_process_group() ; raise e
+[rank1]:                                                           ^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 118, in main
+[rank1]:     try: train(args)
+[rank1]:          ^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 107, in train
+[rank1]:     outputs = model(inputs)
+[rank1]:               ^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
+[rank1]:     else self._run_ddp_forward(*inputs, **kwargs)
+[rank1]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
+[rank1]:     return self.module(*inputs, **kwargs)  # type: ignore[index]
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/aurora.py", line 321, in forward
+[rank1]:     x = self.encoder(
+[rank1]:         ^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/algorithms/_checkpoint/checkpoint_wrapper.py", line 170, in forward
+[rank1]:     return self.checkpoint_fn(  # type: ignore[misc]
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/_compile.py", line 32, in inner
+[rank1]:     return disable_fn(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 632, in _fn
+[rank1]:     return fn(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 496, in checkpoint
+[rank1]:     ret = function(*args, **kwargs)
+[rank1]:           ^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/encoder.py", line 308, in forward
+[rank1]:     x_atmos = self.atmos_token_embeds(x_atmos, atmos_vars)
+[rank1]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/patchembed.py", line 112, in forward
+[rank1]:     proj = F.conv3d(x, weight, self.bias, stride=stride)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.61 GiB. GPU 1 has a total capacity of 93.11 GiB of which 1.05 GiB is free. Including non-PyTorch memory, this process has 12.58 GiB memory in use. Process 1859304 has 79.46 GiB memory in use. Of the allocated memory 11.51 GiB is allocated by PyTorch, and 41.94 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 131, in <module>
+[rank0]:     main(args)
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 119, in main
+[rank0]:     except Exception as e: dist.destroy_process_group() ; raise e
+[rank0]:                                                           ^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 118, in main
+[rank0]:     try: train(args)
+[rank0]:          ^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 107, in train
+[rank0]:     outputs = model(inputs)
+[rank0]:               ^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/parallel/distributed.py", line 1643, in forward
+[rank0]:     else self._run_ddp_forward(*inputs, **kwargs)
+[rank0]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/parallel/distributed.py", line 1459, in _run_ddp_forward
+[rank0]:     return self.module(*inputs, **kwargs)  # type: ignore[index]
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/aurora.py", line 321, in forward
+[rank0]:     x = self.encoder(
+[rank0]:         ^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/algorithms/_checkpoint/checkpoint_wrapper.py", line 170, in forward
+[rank0]:     return self.checkpoint_fn(  # type: ignore[misc]
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/_compile.py", line 32, in inner
+[rank0]:     return disable_fn(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 632, in _fn
+[rank0]:     return fn(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 496, in checkpoint
+[rank0]:     ret = function(*args, **kwargs)
+[rank0]:           ^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/encoder.py", line 329, in forward
+[rank0]:     x_atmos = self.aggregate_levels(x_atmos)  # (B, C_A, L, D) to (B, C, L, D)
+[rank0]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/encoder.py", line 193, in aggregate_levels
+[rank0]:     x = self.level_agg(latents, x)  # (B * L, C, D)
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/perceiver.py", line 225, in forward
+[rank0]:     attn_out = ln1(attn(latents, x))
+[rank0]:                    ^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/perceiver.py", line 142, in forward
+[rank0]:     k, v = self.to_kv(x).chunk(2, dim=-1)  # (B, L2, D1) to twice (B, L2, D)
+[rank0]:            ^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/linear.py", line 125, in forward
+[rank0]:     return F.linear(input, self.weight, self.bias)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 3.21 GiB. GPU 0 has a total capacity of 93.11 GiB of which 583.62 MiB is free. Including non-PyTorch memory, this process has 15.25 GiB memory in use. Process 1859305 has 516.00 MiB memory in use. Process 1859304 has 516.00 MiB memory in use. Process 1859302 has 76.25 GiB memory in use. Of the allocated memory 14.12 GiB is allocated by PyTorch, and 42.20 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Epoch 1/500:   0%|          | 0/3 [00:02<?, ?it/s]
+W0710 16:55:23.098000 1858968 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1859303 closing signal SIGTERM
+E0710 16:55:23.365000 1858968 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 1 (pid: 1859305) of binary: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/python3.11
+Epoch 1/500:   0%|          | 0/3 [00:00<?, ?it/s][rank0]: Traceback (most recent call last):
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 131, in <module>
+[rank0]:     main(args)
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 119, in main
+[rank0]:     except Exception as e: dist.destroy_process_group() ; raise e
+[rank0]:                                                           ^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 118, in main
+[rank0]:     try: train(args)
+[rank0]:          ^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 110, in train
+[rank0]:     loss.backward()
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/_tensor.py", line 581, in backward
+[rank0]:     torch.autograd.backward(
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/autograd/__init__.py", line 347, in backward
+[rank0]:     _engine_run_backward(
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/autograd/graph.py", line 825, in _engine_run_backward
+[rank0]:     return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 1125, in unpack_hook
+[rank0]:     frame.recompute_fn(*args)
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 1519, in recompute_fn
+[rank0]:     fn(*args, **kwargs)
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/swin3d.py", line 725, in forward
+[rank0]:     x = blk(x, c, res, rollout_step)
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/swin3d.py", line 507, in forward
+[rank0]:     x = x + self.drop_path(self.norm2(self.mlp(x), c))
+[rank0]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/aurora/model/film.py", line 49, in forward
+[rank0]:     return self.ln(x) * (self.scale_bias + scale) + shift
+[rank0]:            ^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/normalization.py", line 217, in forward
+[rank0]:     return F.layer_norm(
+[rank0]:            ^^^^^^^^^^^^^
+[rank0]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/functional.py", line 2900, in layer_norm
+[rank0]:     return torch.layer_norm(
+[rank0]:            ^^^^^^^^^^^^^^^^^
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 508.00 MiB. GPU 0 has a total capacity of 93.11 GiB of which 55.62 MiB is free. Process 1859303 has 15.05 GiB memory in use. Process 1859305 has 516.00 MiB memory in use. Process 1859304 has 516.00 MiB memory in use. Including non-PyTorch memory, this process has 76.97 GiB memory in use. Of the allocated memory 75.79 GiB is allocated by PyTorch, and 29.45 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-10_16:55:23
+  host      : gcn96.local.snellius.surf.nl
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 1859305)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Epoch 1/500:   0%|          | 0/3 [00:05<?, ?it/s]
+srun: error: gcn96: task 0: Exited with exit code 1
+srun: Terminating StepId=13102225.0
+slurmstepd: error: *** STEP 13102225.0 ON gcn96 CANCELLED AT 2025-07-10T16:55:23 ***
+W0710 16:55:23.841000 1858969 torch/distributed/elastic/agent/server/api.py:704] Received 15 death signal, shutting down workers
+W0710 16:55:23.842000 1858969 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1859302 closing signal SIGTERM
+W0710 16:55:23.842000 1858969 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1859304 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 260, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/metrics/api.py", line 137, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 696, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/agent/server/api.py", line 855, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 84, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 1858969 got signal: 15
+srun: error: gcn96: task 1: Exited with exit code 1
+
+JOB STATISTICS
+==============
+Job ID: 13102225
+Cluster: snellius
+User/Group: ewalt/ewalt
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 32
+CPU Utilized: 00:22:14
+CPU Efficiency: 36.25% of 01:01:20 core-walltime
+Job Wall-clock time: 00:01:55
+Memory Utilized: 20.15 GB
+Memory Efficiency: 5.60% of 360.00 GB (360.00 GB/node)
+The task which had the largest memory consumption differs by 109.80% from the average task max memory consumption

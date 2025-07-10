@@ -1,0 +1,89 @@
+Environment Info:
+ * Torchrun path: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/torchrun
+ * Python path: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/python
+ * Python version: Python 3.11.7
+ * pytorch version: 2.5.1+cu124
+Starting Aurora training script with arguments: Namespace(num_epochs=500, small=False, bf16=True, autocast=False, checkpointing_module_names=['Perceiver3DEncoder', 'Swin3DTransformerBackbone', 'Basic3DEncoderLayer', 'Basic3DDecoderLayer', 'Perceiver3DDecoder', 'LinearPatchReconstruction'])
+Dummy dataset created with random data.
+Dummy dataset created with random data.
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 125, in <module>
+[rank1]:     main(args)
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 114, in main
+[rank1]:     except Exception as e: dist.destroy_process_group() ; raise e
+[rank1]:                                                           ^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 113, in main
+[rank1]:     try: train(args)
+[rank1]:          ^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/train.py", line 78, in train
+[rank1]:     model = model.to(device)
+[rank1]:             ^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1340, in to
+[rank1]:     return self._apply(convert)
+[rank1]:            ^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 900, in _apply
+[rank1]:     module._apply(fn)
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 900, in _apply
+[rank1]:     module._apply(fn)
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 900, in _apply
+[rank1]:     module._apply(fn)
+[rank1]:   [Previous line repeated 2 more times]
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 927, in _apply
+[rank1]:     param_applied = fn(param)
+[rank1]:                     ^^^^^^^^^
+[rank1]:   File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1326, in convert
+[rank1]:     return t.to(
+[rank1]:            ^^^^^
+[rank1]: RuntimeError: CUDA error: invalid device ordinal
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W0710 15:54:20.904000 1329564 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1329586 closing signal SIGTERM
+E0710 15:54:21.170000 1329564 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 1 (pid: 1329587) of binary: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/python3.11
+Traceback (most recent call last):
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-10_15:54:20
+  host      : gcn122.local.snellius.surf.nl
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 1329587)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: gcn122: task 0: Exited with exit code 1
+srun: Terminating StepId=13100636.0
+
+JOB STATISTICS
+==============
+Job ID: 13100636
+Cluster: snellius
+User/Group: ewalt/ewalt
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:10:31
+CPU Efficiency: 35.21% of 00:29:52 core-walltime
+Job Wall-clock time: 00:01:52
+Memory Utilized: 8.81 GB
+Memory Efficiency: 4.89% of 180.00 GB (180.00 GB/node)

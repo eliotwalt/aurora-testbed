@@ -1,0 +1,99 @@
+Environment Info:
+ * Torchrun path: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/torchrun
+ * Python path: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/python
+ * Python version: Python 3.11.7
+ * pytorch version: 2.5.1+cu124
+|5|13098840|500|false|false|false|all|
+Starting Aurora training script with arguments: Namespace(num_epochs=500, small=False, bf16=False, autocast=False, checkpointing_module_names=['Perceiver3DEncoder', 'Swin3DTransformerBackbone', 'Basic3DEncoderLayer', 'Basic3DDecoderLayer', 'Perceiver3DDecoder', 'LinearPatchReconstruction'])
+Dummy dataset created with random data.
+Model loaded and wrapped in DDP.
+Loss and optimizer configured.
+Epoch 1/500:   0%|          | 0/5 [00:00<?, ?it/s]Epoch 1/500:  20%|██        | 1/5 [00:08<00:32,  8.14s/it]Epoch 1/500:  20%|██        | 1/5 [00:08<00:32,  8.14s/it, loss=9.26e+4, step=0]Epoch 1/500:  40%|████      | 2/5 [00:15<00:22,  7.59s/it, loss=9.26e+4, step=0]Epoch 1/500:  40%|████      | 2/5 [00:15<00:22,  7.59s/it, loss=nan, step=1]    Epoch 1/500:  60%|██████    | 3/5 [00:22<00:15,  7.52s/it, loss=nan, step=1]Epoch 1/500:  60%|██████    | 3/5 [00:22<00:15,  7.52s/it, loss=nan, step=2]Epoch 1/500:  80%|████████  | 4/5 [00:30<00:07,  7.43s/it, loss=nan, step=2]Epoch 1/500:  80%|████████  | 4/5 [00:30<00:07,  7.43s/it, loss=nan, step=3]Epoch 1/500: 100%|██████████| 5/5 [00:37<00:00,  7.35s/it, loss=nan, step=3]Epoch 1/500: 100%|██████████| 5/5 [00:37<00:00,  7.35s/it, loss=nan, step=4]
+Epoch 2/500:   0%|          | 0/5 [00:00<?, ?it/s][AEpoch 1/500: 100%|██████████| 5/5 [00:37<00:00,  7.47s/it, loss=nan, step=4]
+
+Epoch 2/500:  20%|██        | 1/5 [00:07<00:30,  7.64s/it][A
+Epoch 2/500:  20%|██        | 1/5 [00:07<00:30,  7.64s/it, loss=nan, step=5][A
+Epoch 2/500:  40%|████      | 2/5 [00:15<00:22,  7.48s/it, loss=nan, step=5][A
+Epoch 2/500:  40%|████      | 2/5 [00:15<00:22,  7.48s/it, loss=nan, step=6][A
+Epoch 2/500:  60%|██████    | 3/5 [00:22<00:14,  7.41s/it, loss=nan, step=6][A
+Epoch 2/500:  60%|██████    | 3/5 [00:22<00:14,  7.41s/it, loss=nan, step=7][A
+Epoch 2/500:  80%|████████  | 4/5 [00:29<00:07,  7.35s/it, loss=nan, step=7][A
+Epoch 2/500:  80%|████████  | 4/5 [00:29<00:07,  7.35s/it, loss=nan, step=8][A
+Epoch 2/500: 100%|██████████| 5/5 [00:36<00:00,  7.31s/it, loss=nan, step=8][A
+Epoch 2/500: 100%|██████████| 5/5 [00:36<00:00,  7.31s/it, loss=nan, step=9][AEpoch 3/500:   0%|          | 0/5 [00:00<?, ?it/s]Epoch 2/500: 100%|██████████| 5/5 [00:36<00:00,  7.38s/it, loss=nan, step=9]
+Epoch 3/500:  20%|██        | 1/5 [00:07<00:30,  7.64s/it]Epoch 3/500:  20%|██        | 1/5 [00:07<00:30,  7.64s/it, loss=nan, step=10]Epoch 3/500:  40%|████      | 2/5 [00:15<00:22,  7.48s/it, loss=nan, step=10]Epoch 3/500:  40%|████      | 2/5 [00:15<00:22,  7.48s/it, loss=nan, step=11]Epoch 3/500:  60%|██████    | 3/5 [00:22<00:14,  7.49s/it, loss=nan, step=11]Epoch 3/500:  60%|██████    | 3/5 [00:22<00:14,  7.49s/it, loss=nan, step=12]Epoch 3/500:  80%|████████  | 4/5 [00:29<00:07,  7.39s/it, loss=nan, step=12]Epoch 3/500:  80%|████████  | 4/5 [00:29<00:07,  7.39s/it, loss=nan, step=13]Epoch 3/500: 100%|██████████| 5/5 [00:36<00:00,  7.33s/it, loss=nan, step=13]Epoch 3/500: 100%|██████████| 5/5 [00:36<00:00,  7.33s/it, loss=nan, step=14]
+Epoch 4/500:   0%|          | 0/5 [00:00<?, ?it/s][AEpoch 3/500: 100%|██████████| 5/5 [00:37<00:00,  7.41s/it, loss=nan, step=14]
+
+Epoch 4/500:  20%|██        | 1/5 [00:07<00:31,  7.88s/it][A
+Epoch 4/500:  20%|██        | 1/5 [00:07<00:31,  7.88s/it, loss=nan, step=15][A
+Epoch 4/500:  40%|████      | 2/5 [00:15<00:22,  7.58s/it, loss=nan, step=15][A
+Epoch 4/500:  40%|████      | 2/5 [00:15<00:22,  7.58s/it, loss=nan, step=16][A
+Epoch 4/500:  60%|██████    | 3/5 [00:23<00:16,  8.04s/it, loss=nan, step=16][A
+Epoch 4/500:  60%|██████    | 3/5 [00:23<00:16,  8.04s/it, loss=nan, step=17][A
+Epoch 4/500:  80%|████████  | 4/5 [00:31<00:07,  7.74s/it, loss=nan, step=17][A
+Epoch 4/500:  80%|████████  | 4/5 [00:31<00:07,  7.74s/it, loss=nan, step=18][A
+Epoch 4/500: 100%|██████████| 5/5 [00:38<00:00,  7.57s/it, loss=nan, step=18][A
+Epoch 4/500: 100%|██████████| 5/5 [00:38<00:00,  7.57s/it, loss=nan, step=19][AEpoch 5/500:   0%|          | 0/5 [00:00<?, ?it/s]Epoch 4/500: 100%|██████████| 5/5 [00:38<00:00,  7.69s/it, loss=nan, step=19]
+Epoch 5/500:  20%|██        | 1/5 [00:07<00:30,  7.67s/it]Epoch 5/500:  20%|██        | 1/5 [00:07<00:30,  7.67s/it, loss=nan, step=20]Epoch 5/500:  40%|████      | 2/5 [00:15<00:22,  7.59s/it, loss=nan, step=20]Epoch 5/500:  40%|████      | 2/5 [00:15<00:22,  7.59s/it, loss=nan, step=21]Epoch 5/500:  60%|██████    | 3/5 [00:22<00:14,  7.49s/it, loss=nan, step=21]Epoch 5/500:  60%|██████    | 3/5 [00:22<00:14,  7.49s/it, loss=nan, step=22]Epoch 5/500:  80%|████████  | 4/5 [00:29<00:07,  7.39s/it, loss=nan, step=22]Epoch 5/500:  80%|████████  | 4/5 [00:29<00:07,  7.39s/it, loss=nan, step=23]Epoch 5/500: 100%|██████████| 5/5 [00:37<00:00,  7.34s/it, loss=nan, step=23]Epoch 5/500: 100%|██████████| 5/5 [00:37<00:00,  7.34s/it, loss=nan, step=24]
+Epoch 6/500:   0%|          | 0/5 [00:00<?, ?it/s][AEpoch 5/500: 100%|██████████| 5/5 [00:37<00:00,  7.43s/it, loss=nan, step=24]
+
+Epoch 6/500:  20%|██        | 1/5 [00:07<00:30,  7.63s/it][A
+Epoch 6/500:  20%|██        | 1/5 [00:07<00:30,  7.63s/it, loss=nan, step=25][A
+Epoch 6/500:  40%|████      | 2/5 [00:15<00:22,  7.49s/it, loss=nan, step=25][A
+Epoch 6/500:  40%|████      | 2/5 [00:15<00:22,  7.49s/it, loss=nan, step=26][A
+Epoch 6/500:  60%|██████    | 3/5 [00:22<00:14,  7.44s/it, loss=nan, step=26][A
+Epoch 6/500:  60%|██████    | 3/5 [00:22<00:14,  7.44s/it, loss=nan, step=27][A
+Epoch 6/500:  80%|████████  | 4/5 [00:29<00:07,  7.37s/it, loss=nan, step=27][A
+Epoch 6/500:  80%|████████  | 4/5 [00:29<00:07,  7.37s/it, loss=nan, step=28][A
+Epoch 6/500: 100%|██████████| 5/5 [00:36<00:00,  7.33s/it, loss=nan, step=28][A
+Epoch 6/500: 100%|██████████| 5/5 [00:36<00:00,  7.33s/it, loss=nan, step=29][AEpoch 7/500:   0%|          | 0/5 [00:00<?, ?it/s]Epoch 6/500: 100%|██████████| 5/5 [00:36<00:00,  7.40s/it, loss=nan, step=29]
+Epoch 7/500:  20%|██        | 1/5 [00:07<00:31,  7.81s/it]Epoch 7/500:  20%|██        | 1/5 [00:07<00:31,  7.81s/it, loss=nan, step=30]Epoch 7/500:  40%|████      | 2/5 [00:15<00:22,  7.56s/it, loss=nan, step=30]Epoch 7/500:  40%|████      | 2/5 [00:15<00:22,  7.56s/it, loss=nan, step=31]Epoch 7/500:  60%|██████    | 3/5 [00:22<00:14,  7.43s/it, loss=nan, step=31]Epoch 7/500:  60%|██████    | 3/5 [00:22<00:14,  7.43s/it, loss=nan, step=32]E0710 15:12:39.313000 3169816 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: -11) local_rank: 0 (pid: 3169893) of binary: /gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/python3.11
+Traceback (most recent call last):
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home3/ewalt/aurora-testbed/env/venv_h100/lib64/python3.11/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+=========================================================
+train.py FAILED
+---------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+---------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-07-10_15:12:39
+  host      : gcn157.local.snellius.surf.nl
+  rank      : 0 (local_rank: 0)
+  exitcode  : -11 (pid: 3169893)
+  error_file: <N/A>
+  traceback : Signal 11 (SIGSEGV) received by PID 3169893
+=========================================================
+srun: error: gcn157: task 0: Exited with exit code 1
+srun: Terminating StepId=13098840.0
+
+JOB STATISTICS
+==============
+Job ID: 13098840
+Cluster: snellius
+User/Group: ewalt/ewalt
+State: RUNNING
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 01:34:08 core-walltime
+Job Wall-clock time: 00:05:53
+Memory Utilized: 0.00 MB
+Memory Efficiency: 0.00% of 180.00 GB (180.00 GB/node)
+WARNING: Efficiency statistics can only be obtained after the job has ended as seff tool is based on the accounting database data.
