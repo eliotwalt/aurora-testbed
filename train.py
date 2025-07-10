@@ -71,13 +71,12 @@ def train(args):
     print("Dummy dataset created with random data.")
     
     # model
-    if args.small:
-        model = AuroraSmallPretrained(bf16_mode=args.bf16, use_lora=False)
-    else:
-        model = Aurora(bf16_mode=args.bf16, use_lora=False)
+    if args.small: model = AuroraSmallPretrained(bf16_mode=args.bf16, use_lora=False)
+    else: model = Aurora(bf16_mode=args.bf16, use_lora=False)
     model.load_checkpoint(strict=False)
     custom_activation_checkpointing(model, args.checkpointing_module_names)
     model = model.to(device)
+    model = model.train()
     model = DDP(model, device_ids=[local_rank])
     print("Model loaded and wrapped in DDP.")
     
@@ -92,7 +91,6 @@ def train(args):
     
     # training loop
     for epoch in range(args.num_epochs):
-        model.train()
         for i, (inputs, targets) in enumerate(dataloader):
             # to batch and move to device
             inputs, targets = map(lambda x: make_batch(x, lat, lon)._fmap(lambda x: x.to(device, non_blocking=True)), (inputs, targets))
