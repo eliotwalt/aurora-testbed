@@ -55,7 +55,7 @@ def train(args):
     local_rank = int(os.environ["LOCAL_RANK"])
     dist.init_process_group(backend='nccl')
     device = torch.device(f'cuda:{local_rank}')
-    if local_rank == 0: print("Starting Aurora training script...")
+    if local_rank == 0: print("Starting Aurora training script with arguments:", args)
     
     # Dummy dataset
     N = 5  # Number of samples

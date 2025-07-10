@@ -61,7 +61,7 @@ def infer(args):
     local_rank = int(os.environ["LOCAL_RANK"])
     dist.init_process_group(backend='nccl')
     device = torch.device(f'cuda:{local_rank}')
-    if local_rank == 0: print("Starting Aurora inference script...")
+    if local_rank == 0: print("Starting Aurora inference script with arguments:", args)
     
     # Dummy dataset
     N = 5  # Number of samples
