@@ -52,13 +52,14 @@ def custom_activation_checkpointing(model, module_names=("Perceiver3DEncoder","S
         apply_activation_checkpointing(model, check_fn=check)
 
 def train(args):
+    rank = int(os.environ["RANK"])
     local_rank = int(os.environ["LOCAL_RANK"])
     world_size = int(os.environ["WORLD_SIZE"])
     if not args.no_ddp and world_size > 1:
         raise ValueError("Distributed training is enabled but WORLD_SIZE > 1. Use --no_ddp to disable DDP.")
     dist.init_process_group(backend='nccl')
     device = local_rank # torch.device(f'cuda:{local_rank}')
-    if local_rank == 0: print("Starting Aurora training script with arguments:", args)
+    if rank == 0: print("Starting Aurora training script with arguments:", args)
     
     # Dummy dataset
     N = 5  # Number of samples
@@ -80,7 +81,7 @@ def train(args):
     custom_activation_checkpointing(model, args.checkpointing_module_names)
     model = model.to(device)
     model = model.train()
-    if not args.no_ddp and world_size > 1:
+    if not args.no_ddp:
         model = DDP(model, device_ids=[local_rank])
     print("Model loaded and wrapped in DDP.")
     

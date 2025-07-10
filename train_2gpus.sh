@@ -3,11 +3,11 @@
 #SBATCH --partition=gpu_h100
 #SBATCH --time=1:00:00
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=1
-#SBATCH --gpus-per-node=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --gpus-per-node=2
 #SBATCH --cpus-per-task=16
-#SBATCH --output=logs/train/%j.log
-#SBATCH --error=logs/train/%j.log
+#SBATCH --output=logs/train/2gpus/%j.log
+#SBATCH --error=logs/train/2gpus/%j.log
 
 export CUDA_LAUNCH_BLOCKING=1
 

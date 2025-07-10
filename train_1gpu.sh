@@ -6,8 +6,8 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=1
 #SBATCH --cpus-per-task=16
-#SBATCH --output=logs/train/%j.log
-#SBATCH --error=logs/train/%j.log
+#SBATCH --output=logs/train/1gpu/%j.log
+#SBATCH --error=logs/train/1gpu/%j.log
 
 export CUDA_LAUNCH_BLOCKING=1
 

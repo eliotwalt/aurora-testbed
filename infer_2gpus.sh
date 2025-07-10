@@ -6,8 +6,8 @@
 #SBATCH --ntasks-per-node=2
 #SBATCH --gpus-per-node=2
 #SBATCH --cpus-per-task=16
-#SBATCH --output=logs/infer/%j.log
-#SBATCH --error=logs/infer/%j.log
+#SBATCH --output=logs/infer/2gpus/%j.log
+#SBATCH --error=logs/infer/2gpus/%j.log
 
 export CUDA_LAUNCH_BLOCKING=1
 
