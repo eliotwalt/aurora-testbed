@@ -53,8 +53,11 @@ def custom_activation_checkpointing(model, module_names=("Perceiver3DEncoder","S
 
 def train(args):
     local_rank = int(os.environ["LOCAL_RANK"])
+    world_size = int(os.environ["WORLD_SIZE"])
+    if not args.no_ddp and world_size > 1:
+        raise ValueError("Distributed training is enabled but WORLD_SIZE > 1. Use --no_ddp to disable DDP.")
     dist.init_process_group(backend='nccl')
-    device = torch.device(f'cuda:{local_rank}')
+    device = local_rank # torch.device(f'cuda:{local_rank}')
     if local_rank == 0: print("Starting Aurora training script with arguments:", args)
     
     # Dummy dataset
@@ -77,7 +80,8 @@ def train(args):
     custom_activation_checkpointing(model, args.checkpointing_module_names)
     model = model.to(device)
     model = model.train()
-    model = DDP(model, device_ids=[local_rank])
+    if not args.no_ddp and world_size > 1:
+        model = DDP(model, device_ids=[local_rank])
     print("Model loaded and wrapped in DDP.")
     
     # loss and optimizer
@@ -121,6 +125,7 @@ if __name__ == "__main__":
     parser.add_argument("--autocast", action="store_true", help="Use autocast context with bf16")
     parser.add_argument("--checkpointing_module_names", type=str, nargs='+', 
                         default=["Perceiver3DEncoder","Swin3DTransformerBackbone","Basic3DEncoderLayer","Basic3DDecoderLayer","Perceiver3DDecoder","LinearPatchReconstruction"])
+    parser.add_argument("--no_ddp", action="store_true", help="Disable DDP")
     args = parser.parse_args()
     main(args)
     
