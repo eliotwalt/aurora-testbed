@@ -8,8 +8,8 @@
 #SBATCH --cpus-per-task=16
 
 module purge
-module load 2023
-module load Python/3.11.3-GCCcore-12.3.0
+# module load 2023
+# module load Python/3.11.3-GCCcore-12.3.0
 
 python3.11 -m venv env/venv_h100
 source env/venv_h100/bin/activate
