@@ -26,6 +26,12 @@ Note: `N=5` in `train.py`
 - Move to FSDP, PP, TP? 
 - How did Microsoft manage?
 
+## Training results (1 GPU, no DDP)
+Script `train_1gpu_no_ddp.py`. Logs can be found in `logs/train/1gpu`
+
+- `bf16-mode` triggers the illegal memory access error. 
+
+
 ## Inference results (1 GPU)
 Script `infer_1gpu.sh`. Logs can be found in `logs/infer/1gpu`.
 
