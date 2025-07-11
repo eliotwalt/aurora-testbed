@@ -124,6 +124,7 @@ BIND_SLURM="""\
 BIND_DIRS=$TMPDIR,"/scratch-shared/$USER"
 
 
+
 srun \
     --label \
     --gpus-per-node=$SLURM_GPUS_PER_NODE \
