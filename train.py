@@ -55,6 +55,7 @@ def train(args):
     rank = int(os.environ["RANK"])
     local_rank = int(os.environ["LOCAL_RANK"])
     world_size = int(os.environ["WORLD_SIZE"])
+    print(f"rank {rank}: world_size {world_size}, local_rank {local_rank}")
     if args.no_ddp and world_size > 1:
         raise ValueError("Distributed training is enabled but WORLD_SIZE > 1. Use --no_ddp to disable DDP.")
     dist.init_process_group(backend='nccl')
@@ -119,6 +120,8 @@ def main(args):
     except Exception as e: dist.destroy_process_group() ; raise e
     
 if __name__ == "__main__":
+    print()
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--num_epochs", type=int, default=10, help="Number of epochs to train for")
     parser.add_argument("--small", action="store_true", help="Use the small version of the Aurora model")
