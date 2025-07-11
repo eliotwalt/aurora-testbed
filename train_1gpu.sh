@@ -9,7 +9,7 @@
 #SBATCH --output=logs/train/1gpu/%j.log
 #SBATCH --error=logs/train/1gpu/%j.log
 
-export CUDA_LAUNCH_BLOCKING=1
+#export CUDA_LAUNCH_BLOCKING=1
 
 source env/venv_h100/bin/activate
 echo "Environment Info:"
@@ -47,7 +47,7 @@ case "$option" in
     3)
         # small bf16, autocast, all checkpointing
         echo "|$option|$SLURM_JOB_ID|500|true|true|true|all|"
-        srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
+        torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
             --num_epochs=500 --small --bf16 --autocast \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction
@@ -87,7 +87,7 @@ case "$option" in
     8)
         # large bf16, autocast, all checkpointing
         echo "|$option|$SLURM_JOB_ID|500|false|true|true|all|"
-        srun torchrun --standalone --nnodes=1 --nproc_per_node=1 \
+        torchrun --standalone --nnodes=1 --nproc_per_node=1 \
             train.py \
             --num_epochs=500 --bf16 --autocast \
             --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction

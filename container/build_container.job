@@ -1,0 +1,55 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --partition=cbuild
+#SBATCH --time=1:00:00
+#SBATCH --output=%x_%j.out
+#SBATCH --error=%x_%j.err
+
+
+CONTAINER_URL=nvcr.io/nvidia/pytorch:25.06-py3
+CONTAINER_NAME=torch-2.7-aurora-25-06.sif
+
+# Optionally define output dir
+OUTPUT_DIR=
+
+if [ -z "$OUTPUT_DIR" ]; then
+  echo "after if"
+  # default output dir is filepath of this file
+  OUTPUT_DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+fi
+echo "OUTPUT_DIR: $OUTPUT_DIR"
+
+
+CONTAINER_OUTPUT_PATH=$OUTPUT_DIR/$CONTAINER_NAME
+
+export APPTAINER_TMPDIR=/dev/shm/$USER
+export APPTAINER_CACHEDIR=/scratch-shared/$USER/apptainer
+
+mkdir -p $OUTPUT_DIR $APPTAINER_TMPDIR $APPTAINER_CACHEDIR $CONTAINER_OUTPUT_PATH
+
+
+# Define apptainer definition file inline for more flexibility
+TMP_CONTAINER_FILENAME=/dev/shm/$USER/torch.def
+
+cat <<EOF > $TMP_CONTAINER_FILENAME
+Bootstrap: docker
+From: $CONTAINER_URL
+
+%post
+     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-12.9/compat
+     export PIP_NO_CACHE_DIR=1
+     pip install microsoft-aurora==1.7.0 timm
+
+%environment
+    export LD_PRELOAD=
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-12.9/compat
+    
+EOF
+
+echo "Downloading $CONTAINER_URL to $CONTAINER_OUTPUT_PATH"
+apptainer build --force $CONTAINER_OUTPUT_PATH $TMP_CONTAINER_FILENAME
+
+rm $TMP_CONTAINER_FILENAME
+echo "Done building! Check out $CONTAINER_OUTPUT_PATH"
