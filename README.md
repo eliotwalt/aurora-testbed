@@ -1,6 +1,33 @@
 # Aurora test bed
 Training and inference of Aurora model on NVIDIA H100 GPUs. 
 
+## Usage
+Current scripts are specific to the Snellius HPC but changing the SLURM flags in `train_*.sh` and `infer_*.sh`.
+
+### Create environment on a H100 node
+```bash
+sbatch make_env.sh
+```
+### Train
+Training scripts are `train_*.sh`
+```bash
+# General usage
+sbatch train_*.sh $option
+```
+with `option` an integer controlling what mixed precision and gradient checkpointing to use.
+
+### Inference 
+Inference scripts are `infer_*.sh`
+```bash
+# General usage
+sbatch infer_*.sh $option
+```
+with `option` an integer controlling what mixed precision and gradient checkpointing to use.
+
+### Run all experiemnts
+The `run_experiments_*.sh` scripts call the training and inference scripts with all the possible option values automatically for convenenience. 
+
+
 ## Summary
 - We are able to run stable inference.
 - We are unable to train the large model with more than 1 GPU. We either get illegal memory access or cuda OOM errors, regardless of the configuration of mixed precision and activation checkpointing. 
