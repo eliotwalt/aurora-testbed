@@ -8,15 +8,7 @@
 #SBATCH --output=logs/train/1gpu/%j.log
 #SBATCH --error=logs/train/1gpu/%j.log
 
-
 CONTAINER_PATH="container/torch-2.7-aurora-25-06.sif"
-
-## This is not defined yet because we are not inside the container
-# echo "Environment Info:"
-# echo " * Torchrun path: $(which torchrun)"
-# echo " * Python path: $(which python)"
-# echo " * Python version: $(python --version)"
-# echo " * pytorch version: $(python -c 'import torch; print(torch.__version__)')"
 
 MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 MASTER_PORT=$((20000 + RANDOM % 10001))
@@ -35,7 +27,6 @@ PYTHON_SCRIPT=""" \
 train.py \
 --num_epochs=500 \
 """
-
 
 option=$1
 case "$option" in

@@ -7,7 +7,6 @@
 #SBATCH --output=%x_%j.out
 #SBATCH --error=%x_%j.err
 
-
 CONTAINER_URL=nvcr.io/nvidia/pytorch:25.06-py3
 CONTAINER_NAME=torch-2.7-aurora-25-06.sif
 
@@ -28,7 +27,6 @@ export APPTAINER_TMPDIR=/dev/shm/$USER
 export APPTAINER_CACHEDIR=/scratch-shared/$USER/apptainer
 
 mkdir -p $OUTPUT_DIR $APPTAINER_TMPDIR $APPTAINER_CACHEDIR $CONTAINER_OUTPUT_PATH
-
 
 # Define apptainer definition file inline for more flexibility
 TMP_CONTAINER_FILENAME=/dev/shm/$USER/torch.def
