@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=aurora-train
+#SBATCH --job-name=aurora-eval
 #SBATCH --partition=gpu_h100
 #SBATCH --time=1:00:00
 #SBATCH --nodes=1 
 #SBATCH --gpus-per-node=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --output=logs/train/1gpu/%j.log
-#SBATCH --error=logs/train/1gpu/%j.log
+#SBATCH --output=logs/infer/1gpu/%j.log
+#SBATCH --error=logs/infer/1gpu/%j.log
 
 CONTAINER_PATH="container/torch-2.7-aurora-25-06.sif"
 
