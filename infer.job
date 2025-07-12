@@ -25,7 +25,7 @@ DYNAMIC_BASE_ARGS="--rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT"
 
 PYTHON_SCRIPT=""" \
 infer.py \
---num_steps=196 \
+--num_steps=420 \
 """
 
 option=$1
