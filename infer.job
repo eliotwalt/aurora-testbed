@@ -113,6 +113,8 @@ BIND_SLURM="""\
 """
 
 BIND_DIRS=$TMPDIR,"/scratch-shared/$USER"
+IFS=',' read -ra DIRS <<< "$BIND_DIRS"
+mkdir -p "${DIRS[@]}"
 
 srun \
     --label \
