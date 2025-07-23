@@ -1,0 +1,78 @@
+#!/bin/bash
+#SBATCH --job-name=aurora-train
+#SBATCH --partition=gpu_h100
+#SBATCH --time=1:00:00
+#SBATCH --nodes=1 
+#SBATCH --gpus-per-node=8
+#SBATCH --ntasks-per-node=1
+#SBATCH --output=logs/train/8gpus/%j.log
+#SBATCH --error=logs/train/8gpus/%j.log
+
+CONTAINER_PATH="container/torch-2.7-aurora-25-06.sif"
+
+MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+MASTER_PORT=$((20000 + RANDOM % 10001))
+
+BASE_COMMAND=''' \
+torchrun \
+--nnodes=$SLURM_NNODES \
+--nproc_per_node=$SLURM_GPUS_PER_NODE \
+--node_rank=$SLURM_PROCID \
+--rdzv_backend=c10d \
+'''
+
+DYNAMIC_BASE_ARGS="--rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT"
+
+PYTHON_SCRIPT=""" \
+train.py \
+--num_epochs=500 \
+"""
+
+PYTHON_ARGS="--bf16 --autocast --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction"
+
+esac
+
+BIND_SLURM="""\
+/etc/passwd,\
+/etc/slurm/,\
+/opt/ear/,\
+/usr/bin/scontrol,\
+/usr/bin/srun,\
+/usr/lib64/libcrypt.so.2,\
+/usr/lib64/libdbus-1.so.3,\
+/usr/lib64/libfreeipmi.so.17,\
+/usr/lib64/libibmad.so.5,\
+/usr/lib64/libipmimonitoring.so.6,\
+/usr/lib64/libjson-c.so.5,\
+/usr/lib64/libjwt.so.1,\
+/usr/lib64/libjwt.so.1.7.0,\
+/usr/lib64/liblua-5.4.so,\
+/usr/lib64/liblua.so,\
+/usr/lib64/libmariadb.so.3,\
+/usr/lib64/libmunge.so.2,\
+/usr/lib64/libyaml-0.so.2,\
+/usr/lib64/lua,\
+/usr/lib64/slurm/,\
+/usr/share/lua,\
+/var/run/,\
+/var/spool/slurm/\
+"""
+
+BIND_DIRS=$TMPDIR,"/scratch-shared/$USER"
+IFS=',' read -ra DIRS <<< "$BIND_DIRS"
+mkdir -p "${DIRS[@]}"
+
+srun \
+    --label \
+    --gpus-per-node=$SLURM_GPUS_PER_NODE \
+    apptainer exec \
+    --nv \
+    --no-home \
+    --env HF_HOME=/scratch-shared/$USER/hf_cache/ \
+    --env TRITON_LIBCUDA_PATH=/usr/local/cuda-12.9/compat/lib.real/lib/libcuda.so.1 \
+    --env NCCL_SOCKET_IFNAME=en \
+    --env TMPDIR=$TMPDIR \
+    -B "$BIND_SLURM" \
+    -B "$BIND_DIRS" \
+    "$CONTAINER_PATH" \
+    bash -c "$BASE_COMMAND $DYNAMIC_BASE_ARGS $PYTHON_SCRIPT $PYTHON_ARGS"
