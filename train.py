@@ -58,8 +58,16 @@ def train(args):
     print(f"rank {rank}: world_size {world_size}, local_rank {local_rank}")
     if args.no_ddp and world_size > 1:
         raise ValueError("Distributed training is enabled but WORLD_SIZE > 1. Use --no_ddp to disable DDP.")
-    dist.init_process_group(backend='nccl')
-    device = local_rank # torch.device(f'cuda:{local_rank}')
+    
+    # Set CUDA device before init_process_group
+    torch.cuda.set_device(local_rank)
+    device = local_rank
+    
+    # Initialize process group with timeout
+    print(f"rank {rank}: Initializing process group...")
+    dist.init_process_group(backend='nccl', timeout=datetime.timedelta(seconds=7200))
+    print(f"rank {rank}: Process group initialized successfully")
+    
     if rank == 0: print("Starting Aurora training script with arguments:", args)
     
     # Dummy dataset
@@ -116,8 +124,15 @@ def train(args):
             global_step += 1
                 
 def main(args):
-    try: train(args)
-    except Exception as e: dist.destroy_process_group() ; raise e
+    try: 
+        train(args)
+    except Exception as e: 
+        if dist.is_initialized():
+            dist.destroy_process_group()
+        raise e
+    finally:
+        if dist.is_initialized():
+            dist.destroy_process_group()
     
 if __name__ == "__main__":
     print()

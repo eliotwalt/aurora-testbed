@@ -19,6 +19,8 @@ torchrun \
 --nproc_per_node=$SLURM_GPUS_PER_NODE \
 --node_rank=$SLURM_PROCID \
 --rdzv_backend=c10d \
+--rdzv_conf=timeout=7200 \
+--max_restarts=0 \
 '''
 
 DYNAMIC_BASE_ARGS="--rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT"
@@ -59,6 +61,13 @@ BIND_SLURM="""\
 BIND_DIRS=$TMPDIR,"/scratch-shared/$USER"
 IFS=',' read -ra DIRS <<< "$BIND_DIRS"
 mkdir -p "${DIRS[@]}"
+mkdir -p logs/train/8gpus
+
+# Print network interface information for debugging
+echo "=== Network Interface Debug Info ==="
+echo "Available network interfaces:"
+srun --ntasks=1 --nodes=1 ip addr show | grep -E "^[0-9]+:|inet "
+echo "===================================="
 
 srun \
     --label \
@@ -68,7 +77,14 @@ srun \
     --no-home \
     --env HF_HOME=/scratch-shared/$USER/hf_cache/ \
     --env TRITON_LIBCUDA_PATH=/usr/local/cuda-12.9/compat/lib.real/lib/libcuda.so.1 \
-    --env NCCL_SOCKET_IFNAME=en \
+    --env NCCL_SOCKET_IFNAME=^docker0,lo \
+    --env NCCL_IB_DISABLE=1 \
+    --env NCCL_P2P_DISABLE=1 \
+    --env NCCL_DEBUG=INFO \
+    --env NCCL_BLOCKING_WAIT=1 \
+    --env NCCL_ASYNC_ERROR_HANDLING=1 \
+    --env NCCL_TIMEOUT=7200000 \
+    --env CUDA_VISIBLE_DEVICES=0,1,2,3 \
     --env TMPDIR=$TMPDIR \
     -B "$BIND_SLURM" \
     -B "$BIND_DIRS" \
