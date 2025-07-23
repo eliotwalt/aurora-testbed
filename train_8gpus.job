@@ -67,6 +67,10 @@ mkdir -p logs/train/8gpus
 echo "=== Network Interface Debug Info ==="
 echo "Available network interfaces:"
 srun --ntasks=1 --nodes=1 ip addr show | grep -E "^[0-9]+:|inet "
+echo "Checking for eno2np0 interface:"
+srun --ntasks=$SLURM_NNODES --ntasks-per-node=1 ip addr show eno2np0 2>/dev/null || echo "eno2np0 not found on this node"
+echo "Node hostnames and IPs:"
+srun --ntasks=$SLURM_NNODES --ntasks-per-node=1 bash -c 'echo "$(hostname): $(ip addr show eno2np0 2>/dev/null | grep "inet " | awk "{print \$2}" | cut -d/ -f1)"'
 echo "===================================="
 
 srun \
@@ -77,12 +81,12 @@ srun \
     --no-home \
     --env HF_HOME=/scratch-shared/$USER/hf_cache/ \
     --env TRITON_LIBCUDA_PATH=/usr/local/cuda-12.9/compat/lib.real/lib/libcuda.so.1 \
-    --env NCCL_SOCKET_IFNAME=^docker0,lo \
+    --env NCCL_SOCKET_IFNAME=eno2np0 \
     --env NCCL_IB_DISABLE=1 \
     --env NCCL_P2P_DISABLE=1 \
     --env NCCL_DEBUG=INFO \
-    --env NCCL_BLOCKING_WAIT=1 \
-    --env NCCL_ASYNC_ERROR_HANDLING=1 \
+    --env TORCH_NCCL_BLOCKING_WAIT=1 \
+    --env TORCH_NCCL_ASYNC_ERROR_HANDLING=1 \
     --env NCCL_TIMEOUT=7200000 \
     --env CUDA_VISIBLE_DEVICES=0,1,2,3 \
     --env TMPDIR=$TMPDIR \
