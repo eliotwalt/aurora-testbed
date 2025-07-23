@@ -2,8 +2,8 @@
 #SBATCH --job-name=aurora-train
 #SBATCH --partition=gpu_h100
 #SBATCH --time=1:00:00
-#SBATCH --nodes=1 
-#SBATCH --gpus-per-node=8
+#SBATCH --nodes=2
+#SBATCH --gpus-per-node=4
 #SBATCH --ntasks-per-node=1
 #SBATCH --output=logs/train/8gpus/%j.log
 #SBATCH --error=logs/train/8gpus/%j.log
