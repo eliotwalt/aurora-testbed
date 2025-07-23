@@ -30,8 +30,6 @@ train.py \
 
 PYTHON_ARGS="--bf16 --autocast --checkpointing_module_names Perceiver3DEncoder Swin3DTransformerBackbone Basic3DEncoderLayer Basic3DDecoderLayer Perceiver3DDecoder LinearPatchReconstruction"
 
-esac
-
 BIND_SLURM="""\
 /etc/passwd,\
 /etc/slurm/,\
